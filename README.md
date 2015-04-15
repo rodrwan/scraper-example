@@ -26,3 +26,24 @@ Basically here we demonstrate the power of Yakuza framework.
 - bikes is the main scraper
 - terra-firma is where the agent is defined
 - get-shop-link is where we create the task to extract shop link
+
+## Install and Run
+
+To install this repo, first you need to clone it.
+```sh
+git clone git@github.com:rodrwan/scraper-example.git
+```
+
+Then to need to install npm packages:
+```sh
+npm install
+```
+
+Finally, you can run:
+```sh
+node app.js
+```
+or run
+```sh
+npm start
+```
