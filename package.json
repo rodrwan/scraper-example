@@ -1,0 +1,27 @@
+{
+  "name": "scraper-example",
+  "version": "0.0.1",
+  "description": "Example of Yakuza Module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "asdfasdf"
+  },
+  "keywords": [
+    "scraper",
+    "yakuza",
+    "example",
+    "bikes"
+  ],
+  "author": "Rodrigo Fuenzalida (rf@finciero.com)",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "colors": "^1.0.3",
+    "lodash": "^3.6.0",
+    "yakuza": "^0.2.1"
+  }
+}
