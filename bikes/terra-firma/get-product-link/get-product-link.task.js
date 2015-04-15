@@ -20,16 +20,22 @@ function capitalize (string) {
 URL_BASE = 'http://www.terrafirma.cl';
 schema = {
   '$rule': 'div.category-view div.spacer',
+  'title': {
+    '$rule': 'a',
+    '$sanitizer': function ($elem) {
+      return capitalize($elem.attr('title'));
+    }
+  },
   'links': {
     '$rule': 'a',
     '$sanitizer': function ($elem) {
       return $elem.attr('href');
     }
   },
-  'title': {
-    '$rule': 'a',
+  'image': {
+    '$rule': 'img',
     '$sanitizer': function ($elem) {
-      return capitalize($elem.attr('title'));
+      return $elem.attr('src');
     }
   }
 };
@@ -61,9 +67,11 @@ getProductLink.main(function (task, http, params) {
 
   http.get(requestOpts).then(function (result) {
     var bodyParser, parsedBody;
+
     bodyParser = new Gurkha(schema, schemaOptions);
     parsedBody = bodyParser.parse(result.body);
-    console.log(parsedBody);
+
+    task.success(parsedBody);
   })
   .fail(function (err) {
     task.fail(err);
