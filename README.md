@@ -8,7 +8,7 @@ We extract the link of the shop and extract some list products.
 
 Basically here we demonstrate the power of Yakuza framework.
 
-## Directory struct
+## Directory structure:
 
 ```
 .
@@ -21,3 +21,7 @@ Basically here we demonstrate the power of Yakuza framework.
     ├── lodash
     └── yakuza
 ```
+
+- bikes is the main scraper
+- terra-firma is where the agent is defined
+- get-shop-link is where we create the task to extract shop link
