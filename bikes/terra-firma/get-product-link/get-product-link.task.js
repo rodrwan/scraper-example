@@ -47,7 +47,7 @@ schemaOptions = {
 getProductLink = Yakuza.task('Bikes', 'TerraFirma', 'GetProductLink');
 
 getProductLink.builder(function (job) {
-  // pass the section to retrieve the corresponding url.
+  // pass shop link to main method
   return {'shopLink': job.shared('GetShopLink.shopLink')};
 });
 
