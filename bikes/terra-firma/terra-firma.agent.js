@@ -7,13 +7,16 @@ Yakuza = require('yakuza');
 
 // require tasks
 require('./get-shop-link/get-shop-link.task');
+require('./get-product-link/get-product-link.task');
 
 Yakuza.agent('Bikes', 'TerraFirma')
   .setup(function (config) {
     config.plan = [
-      'GetShopLink'
+      'GetShopLink',
+      'GetProductLink'
     ];
   })
   .routine('FirstRun', [
-    'GetShopLink'
+    'GetShopLink',
+    'GetProductLink'
   ]);

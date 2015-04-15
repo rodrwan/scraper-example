@@ -21,6 +21,7 @@
   "dependencies": {
     "cheerio": "^0.19.0",
     "colors": "^1.0.3",
+    "gurkha": "^1.0.0",
     "lodash": "^3.6.0",
     "yakuza": "^0.2.1"
   }

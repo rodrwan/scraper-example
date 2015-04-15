@@ -8,5 +8,6 @@ Yakuza = require('Yakuza');
 require('./terra-firma/terra-firma.agent');
 
 Yakuza.scraper('Bikes').routine('FirstRun', [
-  'GetShopLink'
+  'GetShopLink',
+  'GetProductLink'
 ]);

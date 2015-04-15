@@ -1,7 +1,7 @@
 'use strict';
 
 // CONST, classes, task-name
-var URL_BASE, Yakuza, cheerio, _, getSectionLink;
+var URL_BASE, Yakuza, cheerio, _, getShopLink;
 
 Yakuza = require('yakuza');
 cheerio = require('cheerio');
@@ -9,9 +9,9 @@ _ = require('lodash');
 
 URL_BASE = 'http://www.terrafirma.cl/';
 
-getSectionLink = Yakuza.task('Bikes', 'TerraFirma', 'GetShopLink');
+getShopLink = Yakuza.task('Bikes', 'TerraFirma', 'GetShopLink');
 
-getSectionLink.builder(function (job) {
+getShopLink.builder(function (job) {
   // pass the section to retrieve the corresponding url.
   return {'section': job.params.section};
 });
@@ -20,7 +20,7 @@ getSectionLink.builder(function (job) {
  * Main function, here we write the code to extract, in this case,
  * the corresponding section url.
  */
-getSectionLink.main(function (task, http, params) {
+getShopLink.main(function (task, http, params) {
   var template, requestOpts, section;
 
   template = http.optionsTemplate();
