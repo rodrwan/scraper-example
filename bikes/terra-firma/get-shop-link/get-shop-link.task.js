@@ -18,7 +18,7 @@ getShopLink.builder(function (job) {
 
 /**
  * Main function, here we write the code to extract, in this case,
- * the corresponding section url.
+ * shop link.
  */
 getShopLink.main(function (task, http, params) {
   var template, requestOpts, section;
@@ -32,7 +32,7 @@ getShopLink.main(function (task, http, params) {
   http.get(requestOpts).then(function (result) {
     var $, $links, link;
     /**
-     * result has two important element, res and body.
+     * `result` has two important element, res and body.
      * res: include all relative to http response.
      * body: html response.
      */
@@ -53,7 +53,7 @@ getShopLink.main(function (task, http, params) {
     task.share('shopLink', link);
     task.success('Link found.');
   }).fail(function (err) {
-    // Public final err to Yakuza.
+    // Public final error to Yakuza.
     task.fail(err);
   }).done();
 });
