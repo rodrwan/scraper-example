@@ -6,4 +6,4 @@ In this example we scrape a basic web page.
 
 We extract the link of the shop and extract some list products.
 
-Basicly here we demostrate the power of Yakuza framework.
+Basically here we demonstrate the power of Yakuza framework.
