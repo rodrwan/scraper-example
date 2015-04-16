@@ -2,7 +2,7 @@
 
 var Yakuza;
 
-Yakuza = require('Yakuza');
+Yakuza = require('yakuza');
 
 // require agents
 require('./terra-firma/terra-firma.agent');
