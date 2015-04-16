@@ -7,15 +7,37 @@ Yakuza = require('yakuza');
 cheerio = require('cheerio');
 _ = require('lodash');
 
+/**
+ * Base url of the web page.
+ */
 URL_BASE = 'http://www.terrafirma.cl/';
 
+/**
+ * Task GetShopLink of Bikes Agent.
+ */
 getShopLink = Yakuza.task('Bikes', 'TerraFirma', 'GetShopLink');
 
+/**
+ * Builder of Bikes task, this builder pass data from Job.
+ */
 getShopLink.builder(function (job) {
   // pass the section to retrieve the corresponding url.
   return {'section': job.params.section};
 });
 
+/**
+ * Hook to make retries, modify data.
+ */
+getShopLink.hooks({
+  // if something fail, make 3 retries.
+  'onFail': function (task) {
+    // 3 retries, then stop.
+    if (task.runs === 3) {
+      return false;
+    }
+    return task.rerun();
+  }
+});
 /**
  * Main function, here we write the code to extract, in this case,
  * shop link.
@@ -25,6 +47,7 @@ getShopLink.main(function (task, http, params) {
 
   template = http.optionsTemplate();
   section = params.section;
+
   requestOpts = template.build({
     'url': URL_BASE + section + '/'
   });

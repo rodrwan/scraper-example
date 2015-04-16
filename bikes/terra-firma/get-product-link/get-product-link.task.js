@@ -1,7 +1,7 @@
 'use strict';
 
 // CONST, classes, task-name
-var URL_BASE, schema, schemaOptions, Yakuza, Gurkha, _, getProductLink;
+var URL_BASE, SCHEMA, schemaOptions, Yakuza, Gurkha, _, getProductLink;
 
 Yakuza = require('yakuza');
 Gurkha = require('gurkha');
@@ -17,8 +17,15 @@ function capitalize (string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+/**
+ * Base url of the web page.
+ */
 URL_BASE = 'http://www.terrafirma.cl';
-schema = {
+
+/**
+ * Schema to extract values from html
+ */
+SCHEMA = {
   '$rule': 'div.category-view div.spacer',
   'title': {
     '$rule': 'a',
@@ -26,7 +33,7 @@ schema = {
       return capitalize($elem.attr('title'));
     }
   },
-  'links': {
+  'link': {
     '$rule': 'a',
     '$sanitizer': function ($elem) {
       return $elem.attr('href');
@@ -40,35 +47,77 @@ schema = {
   }
 };
 
+/**
+ * Basic options to normalize HTML response.
+ */
 schemaOptions = {
   'normalizeWhitespace': true
 };
 
+/**
+ * Task GetProductLink of Bikes Agent.
+ */
 getProductLink = Yakuza.task('Bikes', 'TerraFirma', 'GetProductLink');
 
+/**
+ * Builder of Bikes task, this builder pass extra data, extracted
+ * from previous task to main function.
+ */
 getProductLink.builder(function (job) {
-  // pass shop link to main method
   return {'shopLink': job.shared('GetShopLink.shopLink')};
+});
+
+/**
+ * Hook to make retries, modify data.
+ */
+getProductLink.hooks({
+  // if something fail, make 3 retries.
+  'onFail': function (task) {
+    // 3 retries, then stop.
+    if (task.runs === 3) {
+      return false;
+    }
+    return task.params;
+  },
+  // Dummy example, possible filter usage.
+  // Join base url to retrieved links.
+  'onSuccess': function (task) {
+    var newData;
+
+    newData = [];
+    _.each(task.data, function (data) {
+      data.link = URL_BASE + data.link;
+      data.image = URL_BASE + data.image;
+      newData.push(data);
+    });
+
+    return newData;
+  }
 });
 
 /**
  * Main function, here we write the code to extract, in this case,
  * the corresponding section url.
+ * - Request 1: Get shop page
  */
 getProductLink.main(function (task, http, params) {
   var template, requestOpts, requestUrl;
 
-  requestUrl = URL_BASE + params.shopLink;
   template = http.optionsTemplate();
+  requestUrl = URL_BASE + params.shopLink;
 
   requestOpts = template.build({
     'url': requestUrl
   });
 
+  // Request 1: Extract title, link and image
+  // url from HTML response
+  // ========================================
   http.get(requestOpts).then(function (result) {
     var bodyParser, parsedBody;
 
-    bodyParser = new Gurkha(schema, schemaOptions);
+    // Parse body using Gurkha
+    bodyParser = new Gurkha(SCHEMA, schemaOptions);
     parsedBody = bodyParser.parse(result.body);
 
     task.success(parsedBody);
