@@ -33,9 +33,9 @@ getShopLink.hooks({
   'onFail': function (task) {
     // 3 retries, then stop.
     if (task.runs === 3) {
-      return false;
+      return;
     }
-    return task.rerun();
+    task.rerun();
   }
 });
 /**

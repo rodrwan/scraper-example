@@ -75,23 +75,14 @@ getProductLink.hooks({
   'onFail': function (task) {
     // 3 retries, then stop.
     if (task.runs === 3) {
-      return false;
+      return;
     }
-    return task.params;
-  },
-  // Dummy example, possible filter usage.
-  // Join base url to retrieved links.
+    task.rerun();
+  }
+  // Dummy example.
   'onSuccess': function (task) {
-    var newData;
-
-    newData = [];
-    _.each(task.data, function (data) {
-      data.link = URL_BASE + data.link;
-      data.image = URL_BASE + data.image;
-      newData.push(data);
-    });
-
-    return newData;
+    console.log('Process Finished');
+    return task;
   }
 });
 
