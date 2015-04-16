@@ -14,6 +14,7 @@ Basically here we demonstrate the power of Yakuza framework.
 .
 ├── bikes
 │   └── terra-firma
+        └── get-product-link
 │       └── get-shop-link
 └── node_modules
     ├── cheerio
