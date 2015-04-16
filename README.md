@@ -27,6 +27,7 @@ Basically here we demonstrate the power of Yakuza framework.
 - bikes is the main scraper
 - terra-firma is where the agent is defined
 - get-shop-link is where we create the task to extract shop link
+- get-product-link this task extract title, link and image of the different sections of the shop
 
 ## Install and Run
 
